@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-use App\Models\Post;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,13 +26,5 @@ Route::get('/about-us', function () {
 });
 
 
-Route::get('/posts', function () {
-    $posts = Post::all();
-    return view('posts', compact('posts'));
-});
-
-Route::get('/posts/{id}', function ($id) {
-    // select * from posts where id = $id limit 1;
-    $post = Post::find($id);
-    return view('post', compact('post'));
-});
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{id}', [PostController::class, 'show']);
