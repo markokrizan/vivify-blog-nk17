@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Models\Post;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,4 +24,16 @@ Route::get('/', function () {
 
 Route::get('/about-us', function () {
     return view('about-us');
+});
+
+
+Route::get('/posts', function () {
+    $posts = Post::all();
+    return view('posts', compact('posts'));
+});
+
+Route::get('/posts/{id}', function ($id) {
+    // select * from posts where id = $id limit 1;
+    $post = Post::find($id);
+    return view('post', compact('post'));
 });
