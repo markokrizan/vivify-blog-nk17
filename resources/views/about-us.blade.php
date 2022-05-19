@@ -405,7 +405,8 @@
 </head>
 
 <body class="antialiased">
-    <h1>Hello, {{$name}}!</h1>
+    <h1>About us</h1>
+    <p>We are Vivify Academy</p>
 </body>
 
 </html>
