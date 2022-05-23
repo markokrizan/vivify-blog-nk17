@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -16,14 +18,22 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
+        // $posts = Post::all();
+        $posts = Post::where('is_published', 1)
+            ->orderBy('title')
+            ->get();
         return view('posts.index', compact('posts'));
     }
 
     public function show(Post $post)
     {
+        // info("SHOW METODA"); // stogare/logs/laravel.log
+        // DB::listen(function ($query) {
+        //     info($query->sql);
+        // });
         // select * from posts where id = $id limit 1;
         // $post = Post::findOrFail($id);
+        // $comments = Comment::where('post_id', $post->id)->orderBy('id', 'desc')->get();
         return view('posts.show', compact('post'));
     }
 
