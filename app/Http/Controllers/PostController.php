@@ -30,4 +30,23 @@ class PostController extends Controller
     {
         return view('posts.create');
     }
+
+    public function store(Request $request)
+    {
+        // procitamo podatke iz requesta
+        // validiramo podatke
+        // upisemo post u bazu
+        // redirektujemo korisnika na single post stranicu
+        $title = $request->get('title');
+        $content = $request->get('content');
+        // $published = $request->get('published', false);
+
+        // insert into posts (title, content) values ($title, $content)
+        $post = new Post;
+        $post->title = $title;
+        $post->content = $content;
+        $post->save();
+
+        return $post;
+    }
 }
