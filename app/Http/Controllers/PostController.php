@@ -19,10 +19,15 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
-    public function show($id)
+    public function show(Post $post)
     {
         // select * from posts where id = $id limit 1;
-        $post = Post::find($id);
+        // $post = Post::findOrFail($id);
         return view('posts.show', compact('post'));
+    }
+
+    public function create()
+    {
+        return view('posts.create');
     }
 }
