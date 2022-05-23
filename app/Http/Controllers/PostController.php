@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use Illuminate\Http\Request;
 use App\Models\Post;
 
@@ -31,22 +32,19 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        // procitamo podatke iz requesta
-        // validiramo podatke
+        // procitamo i validiramo podatke iz requesta
         // upisemo post u bazu
         // redirektujemo korisnika na single post stranicu
-        $title = $request->get('title');
-        $content = $request->get('content');
-        // $published = $request->get('published', false);
 
         // insert into posts (title, content) values ($title, $content)
-        $post = new Post;
-        $post->title = $title;
-        $post->content = $content;
-        $post->save();
+        // $request->get('published', false);
+        // $request->all();
+        // $request->only(['title', 'content', 'is_published']);
 
-        return $post;
+        $data = $request->validated();
+        $post = Post::create($data);
+        return redirect('/posts/' . $post->id);
     }
 }

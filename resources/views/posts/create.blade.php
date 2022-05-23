@@ -5,16 +5,18 @@
 @section('content')
 <h1>Create a post</h1>
 
-<form method="POST">
+<form method="POST" action="/posts/create">
     @csrf
     <div class="form-group">
         <label for="title">Title</label>
         <input type="text" name="title" class="form-control" id="title" aria-describedby="titlelHelp" placeholder="Enter title">
+        @include('partials.error-message', [ 'field' => 'title'])
     </div>
 
     <div class="form-group">
         <label for="content">Content</label>
         <textarea name="content" class="form-control" id="content" rows="5"></textarea>
+        @include('partials.error-message', [ 'field' => 'content'])
     </div>
 
     <div class="form-check">
