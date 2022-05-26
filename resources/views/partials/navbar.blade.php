@@ -5,18 +5,38 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
+            @auth
+            <!-- @if(auth()->check()) -->
             <li class="nav-item">
                 <a class="nav-link" href="/posts/create">Create a post</a>
+            </li>
+            <!-- @endif -->
+            @endauth
+            <li class="nav-item">
+                <a class="nav-link" href="/">Welcome</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/about-us">About us</a>
             </li>
+            @guest
+            <!-- @if(!auth()->check()) -->
             <li class="nav-item">
                 <a class="nav-link" href="/register">Register</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{route('login')}}">Login</a>
             </li>
+            <!-- @endif -->
+            @endguest
+
+            @auth
+            <li class="nav-item">
+                <form method="POST" action="/logout">
+                    @csrf
+                    <button type="submit" class="btn btn-link">Logout</button>
+                </form>
+            </li>
+            @endauth
         </ul>
     </div>
 </nav>

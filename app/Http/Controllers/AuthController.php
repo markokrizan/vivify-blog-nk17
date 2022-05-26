@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    // Auth::login($user) - setuj ulogovanog korisnika na sesiju
+    // Auth::attempt($credentials) - provjeri da li postoji korisnik sa datim kredincijalima i uloguj ga
+    // Auth::check() - provjeri da li postoji ulogovani korisnik (da li na sesiji postoji id ulogovanog korisnika)
+    // Auth::id() - dobavi id ulogovanog korisnika sa sesije
+    // Auth::user() - dobavi korisnika iz baze koji ima id ulogovanog korisnika sa sesije
+    // Auth::logout() - ukloni ulogovanog korisnika sa sesije
+    // sve metode mogu da se koriste i kao auth()-><method>()
+
     public function getRegisterForm()
     {
         return view('auth.register');
@@ -63,5 +71,7 @@ class AuthController extends Controller
 
     public function logout()
     {
+        Auth::logout();
+        return redirect(route('login'));
     }
 }

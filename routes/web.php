@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,15 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', function () {
-    $name = 'Drago';
+    $user = Auth::user();
+
+    $name = $user != null ? $user->name : "guest";
+    // $name = null;
+    // if ($user) {
+    //     $name = $user->name;
+    // } else {
+    //     $name = '';
+    // }
 
     // compact('name', 'age') => [ 'name' => $name,  'age' => $age ]
     return view('welcome', compact('name'));
@@ -40,3 +49,4 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/login', [AuthController::class, 'getLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
