@@ -11,7 +11,13 @@ class Post extends Model
 
     protected $fillable = ['title', 'content', 'is_published'];
 
-    public function comments() {
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

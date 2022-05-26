@@ -6,6 +6,7 @@ use App\Http\Requests\CreatePostRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
@@ -54,7 +55,11 @@ class PostController extends Controller
         // $request->only(['title', 'content', 'is_published']);
 
         $data = $request->validated();
-        $post = Post::create($data);
+        $data['is_published'] = $request->get('is_published', false);
+
+        $author = Auth::user();
+        $post = $author->posts()->create($data);
+
         return redirect('/posts/' . $post->id);
     }
 }
