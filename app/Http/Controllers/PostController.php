@@ -23,7 +23,7 @@ class PostController extends Controller
         //     info($query->sql);
         // });
         $posts = Post::with('author')
-            ->where('is_published', 1)
+            ->published()
             ->orderBy('title')
             ->get();
         return view('posts.index', compact('posts'));
