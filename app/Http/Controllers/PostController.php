@@ -19,8 +19,11 @@ class PostController extends Controller
 
     public function index()
     {
-        // $posts = Post::all();
-        $posts = Post::where('is_published', 1)
+        // DB::listen(function ($query) {
+        //     info($query->sql);
+        // });
+        $posts = Post::with('author')
+            ->where('is_published', 1)
             ->orderBy('title')
             ->get();
         return view('posts.index', compact('posts'));
