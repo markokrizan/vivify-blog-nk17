@@ -20,7 +20,7 @@ class CommentController extends Controller
     {
         $data = $request->validated(); // [ 'content' => $request->get('content')]
 
-        $comment = $post->comments()->create($data); // insert into comments (content) values ('asdfasdf')
+        $post->comments()->create($data); // insert into comments (content) values ('asdfasdf')
         return back();
     }
 }
