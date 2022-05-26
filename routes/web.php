@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -38,15 +39,29 @@ Route::get('/about-us', function () {
 
 
 Route::get('/posts', [PostController::class, 'index'])->name('home');
-Route::get('/posts/create', [PostController::class, 'create']);
+Route::get('/posts/create', [PostController::class, 'create'])->middleware('auth');
 Route::post('/posts/create', [PostController::class, 'store']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
 
 Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
 
-Route::get('/register', [AuthController::class, 'getRegisterForm']);
+Route::get('/register', [AuthController::class, 'getRegisterForm'])->middleware('guest');
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/login', [AuthController::class, 'getLoginForm'])->name('login');
+Route::get('/login', [AuthController::class, 'getLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+
+function auth_middleware()
+{
+    if (!Auth::check()) {
+        return redirect(route('login'));
+    }
+}
+function guest_middleware()
+{
+    if (Auth::check()) {
+        return redirect(route('home'));
+    }
+}

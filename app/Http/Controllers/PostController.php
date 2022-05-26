@@ -59,6 +59,7 @@ class PostController extends Controller
 
         $data = $request->validated();
         $data['is_published'] = $request->get('is_published', false);
+        info($data);
 
         $author = Auth::user();
         $post = $author->posts()->create($data);
