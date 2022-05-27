@@ -4,7 +4,12 @@
 
 @section('content')
 <h1>{{$post->title}}</h1>
-<h4>{{$post->author->name}}</h4>
+<h4>
+    Author:
+    <a href="{{route('user_posts', ['user' => $post->author->id] )}}">
+        {{$post->author->name}}
+    </a>
+</h4>
 <small class="text-muted">Published at: {{$post->created_at}}</small>
 <p>{{$post->content}}</p>
 <hr />
