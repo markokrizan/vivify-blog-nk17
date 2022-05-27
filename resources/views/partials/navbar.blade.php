@@ -33,10 +33,14 @@
             <li class="nav-item">
                 <form method="POST" action="/logout">
                     @csrf
-                    <button type="submit" class="btn btn-link">Logout</button>
+                    <button type="submit" class="btn btn-link">{{auth()->user()->name}}, Logout</button>
                 </form>
             </li>
             @endauth
+
+            <li class="nav-item">
+                <span class="nav-link">{{session('req_count', 0)}} Requests</span>
+            </li>
         </ul>
     </div>
 </nav>

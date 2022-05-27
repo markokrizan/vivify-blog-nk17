@@ -57,10 +57,14 @@ class PostController extends Controller
 
         $data = $request->validated();
         $data['is_published'] = $request->get('is_published', false);
-        info($data);
 
         $author = Auth::user();
         $post = $author->posts()->create($data);
+
+        $request->session()->flash(
+            'toast_message',
+            "You have successfully created a blog post"
+        );
 
         return redirect('/posts/' . $post->id);
     }

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthMiddleware;
+use App\Http\Middleware\RequestCounterMiddleware;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
     $user = Auth::user();
 
     $name = $user != null ? $user->name : "guest";

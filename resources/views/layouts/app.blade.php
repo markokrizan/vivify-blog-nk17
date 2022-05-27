@@ -27,7 +27,13 @@
 
 <body class="antialiased">
     @include('partials.navbar')
+
     <div class="container">
+        @if(session('toast_message'))
+        <div class="alert alert-success" role="alert">
+            {{session('toast_message')}}
+        </div>
+        @endif
         @yield('content')
     </div>
 </body>
