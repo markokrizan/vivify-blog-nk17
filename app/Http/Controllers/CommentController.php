@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCommentRequest;
+use App\Mail\CommentReceived;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class CommentController extends Controller
 {
@@ -29,6 +31,11 @@ class CommentController extends Controller
 
         $comment->save(); // insert into comments (content) values ('asdfasdf')
         // $post->comments()->create($data);
+
+        if ($comment->user_id != $comment->post->user_id) { // avoid notifying yourself
+            Mail::to($comment->post->author)
+                ->send(new CommentReceived($comment));
+        }
 
         return back();
     }
