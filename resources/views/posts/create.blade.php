@@ -23,6 +23,15 @@
         <input type="checkbox" name="published" class="form-check-input" id="published" value="1">
         <label class="form-check-label" for="published">Publish now?</label>
     </div>
+    <div>
+        <span>Select tags:</span>
+        @foreach($tags as $tag)
+            <div>
+             <input type="checkbox" class="form-check-input" id="tag-{{$tag->id}}" name="tags[]" value="{{$tag->id}}" />
+             <label for="tag-{{$tag->id}}" class="form-check-label">{{$tag->name}}</label>
+            </div>
+        @endforeach
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 @endsection

@@ -6,6 +6,7 @@ use App\Http\Requests\CreatePostRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,7 @@ class PostController extends Controller
         // DB::listen(function ($query) {
         //     info($query->sql);
         // });
-        $posts = Post::with('author')
+        $posts = Post::with('author', 'tags')
             ->published()
             ->orderBy('title')
             ->get();
@@ -41,7 +42,8 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     public function store(CreatePostRequest $request)
@@ -60,6 +62,7 @@ class PostController extends Controller
 
         $author = Auth::user();
         $post = $author->posts()->create($data);
+        $post->tags()->attach($data['tags']);
 
         $request->session()->flash(
             'toast_message',

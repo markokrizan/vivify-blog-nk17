@@ -25,4 +25,9 @@ class Post extends Model
     {
         return $query->where('is_published', 1);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
 }

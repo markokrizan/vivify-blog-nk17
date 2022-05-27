@@ -27,6 +27,8 @@ class CreatePostRequest extends FormRequest
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'published' => 'integer|nullable',
+            'tags' => 'array',    // tags => [1, 2, 3, 7]
+            'tags.*' => 'integer|exists:tags,id'
         ];
     }
 }

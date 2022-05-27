@@ -11,6 +11,11 @@
     </a>
 </h4>
 <small class="text-muted">Published at: {{$post->created_at}}</small>
+<div>
+    @foreach($post->tags as $tag)
+        <small style="background-color: #{{$tag->color}}; padding: 5px; border-radius: 10px">{{$tag->name}}</small>
+    @endforeach
+</div>
 <p>{{$post->content}}</p>
 <hr />
 <div>
