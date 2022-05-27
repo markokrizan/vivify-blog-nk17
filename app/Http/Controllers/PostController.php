@@ -32,9 +32,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         // info("SHOW METODA"); // stogare/logs/laravel.log
-        // DB::listen(function ($query) {
-        //     info($query->sql);
-        // });
+        $post->load('author', 'comments.user');
         // select * from posts where id = $id limit 1;
         // $post = Post::findOrFail($id);
         // $comments = Comment::where('post_id', $post->id)->orderBy('id', 'desc')->get();

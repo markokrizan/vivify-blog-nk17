@@ -6,6 +6,8 @@ use App\Http\Requests\CreateCommentRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -20,7 +22,14 @@ class CommentController extends Controller
     {
         $data = $request->validated(); // [ 'content' => $request->get('content')]
 
-        $post->comments()->create($data); // insert into comments (content) values ('asdfasdf')
+        $comment = new Comment($data);
+
+        $comment->post()->associate($post); // $comment->post_id = $post->id
+        $comment->user()->associate(Auth::user());  // $comment->user_id = Auth::user()->id
+
+        $comment->save(); // insert into comments (content) values ('asdfasdf')
+        // $post->comments()->create($data);
+
         return back();
     }
 }

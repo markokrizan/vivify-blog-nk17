@@ -16,9 +16,14 @@
 <div>
     <h5>Comments:</h5>
     @foreach($post->comments as $comment)
-    <div>{{$comment->content}}</div>
+    <div>
+        {{$comment->user->name}}:
+        <blockquote>{{$comment->content}}</blockquote>
+        <small class="text-muted">{{$comment->created_at}}</small>
+    </div>
     @endforeach
 
+    @auth
     <form method="POST" action="/posts/{{$post->id}}/comments">
         @csrf
 
@@ -29,5 +34,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    @endauth
 </div>
 @endsection

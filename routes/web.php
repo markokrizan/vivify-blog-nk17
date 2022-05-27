@@ -44,7 +44,7 @@ Route::get('/posts/create', [PostController::class, 'create'])->middleware('auth
 Route::post('/posts/create', [PostController::class, 'store']);
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('single_post');
 
-Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->middleware('auth');
 
 Route::get('/register', [AuthController::class, 'getRegisterForm'])->middleware('guest');
 Route::post('/register', [AuthController::class, 'register']);
