@@ -7,6 +7,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -18,16 +19,37 @@ class PostController extends Controller
     // update - update in database
     // destroy - delete from database
 
-    public function index()
+    public function index(Request $request)
     {
         // DB::listen(function ($query) {
         //     info($query->sql);
         // });
-        $posts = Post::with('author', 'tags')
+
+        // uzmi tagove
+
+        // na postojeci kveri primeni tagove
+
+        $tags = $request->input('tags') ?? [];
+
+        // $posts = Post::whereHas('comments', function (Builder $query) {
+        //     $query->where('content', 'like', 'code%');
+        // })->get();
+
+        $postsQuery = Post::with('author', 'tags')
             ->published()
-            ->orderBy('title')
-            ->get();
-        return view('posts.index', compact('posts'));
+            ->orderBy('title');
+
+        if (!empty($tags)) {
+            $postsQuery->whereHas('tags', function (Builder $query) use ($tags) {
+                $query->whereIn('tags.id', $tags);
+            });
+        }
+
+        $posts = $postsQuery->get();
+
+        $allTags = Tag::all();
+
+        return view('posts.index', compact('posts', 'allTags'));
     }
 
     public function show(Post $post)
@@ -58,11 +80,11 @@ class PostController extends Controller
         // $request->only(['title', 'content', 'is_published']);
 
         $data = $request->validated();
-        $data['is_published'] = $request->get('is_published', false);
+        $data['is_published'] = $request->get('published', false);
 
         $author = Auth::user();
         $post = $author->posts()->create($data);
-        $post->tags()->attach($data['tags']);
+        $post->tags()->attach($data['tags'] ?? []);
 
         $request->session()->flash(
             'toast_message',

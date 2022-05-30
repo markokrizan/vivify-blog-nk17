@@ -19,6 +19,12 @@
     </div>
 
     <div class="form-group">
+        <label for="date_of_birth">Date of birth</label>
+        <input type="date" name="date_of_birth" value="{{old('date_of_birth')}}" class="form-control" id="date_of_birth">
+        @include('partials.error-message', [ 'field' => 'date_of_birth'])
+    </div>
+
+    <div class="form-group">
         <label for="password">Password</label>
         <input type="password" name="password" value="{{old('password')}}" class="form-control" id="password" placeholder="Enter password">
         @include('partials.error-message', [ 'field' => 'password'])

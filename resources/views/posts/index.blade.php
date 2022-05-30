@@ -3,6 +3,17 @@
 @section('title', 'Posts')
 
 @section('content')
+
+<form method="GET">
+    <select name="tags[]" multiple>
+        @foreach($allTags as $tag)
+            <option value="{{$tag->id}}">{{$tag->name}}</option>
+        @endforeach
+    </select>
+
+    <button type="submit">Search by tag</button>
+</form>
+
 <h1>Posts</h1>
 
 <ul>
