@@ -45,7 +45,7 @@ class PostController extends Controller
             });
         }
 
-        $posts = $postsQuery->get();
+        $posts = $postsQuery->paginate(10);
 
         $allTags = Tag::all();
 

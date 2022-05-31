@@ -29,4 +29,19 @@
     </li>
     @endforeach
 </ul>
+
+{{-- <p>
+{{ $posts->currentPage() }}
+</p>
+
+@if($posts->currentPage() > 1) 
+    <a href="{{$posts->previousPageUrl()}}">Prev</a>
+@endif
+
+@if($posts->hasMorePages())
+    <a href="{{$posts->nextPageUrl()}}">Next</a>
+@endif --}}
+
+{{ $posts->links() }}
+
 @endsection

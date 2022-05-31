@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('color', 6)->default('FFFFFF');
+            $table->string('color', 7)->default('#FFFFFF');
 
             $table->timestamps();
         });
